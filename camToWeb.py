@@ -5,7 +5,7 @@ import signal
 import sys
 import threading
 
-IPAddress = '192.168.0.101' # change to your device IP (type iwconfig to your terminal and checkout IP wlan0 or else ...)
+IPAddress = '192.168.0.101' # change to your device IP (type iwconfig and then ifconfig to your terminal and checkout IP wlan0 or else ...)
 
 app = Flask(__name__)
 camera = None
