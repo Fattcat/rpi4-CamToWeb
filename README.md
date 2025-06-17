@@ -5,7 +5,7 @@ RaspberryPi4 kali linux python3 code for video streaming to flask server website
 - ├── venv/             ← virtualenv
 - ├── camera_stream.py  ← main python script
 - └── templates/
--     └── index.html    ← HTML for stream video
+- ----└── index.html    ← HTML for stream video
 
 # How to use ?
 - Clone this repo (on rpi4 with linuxOS)
