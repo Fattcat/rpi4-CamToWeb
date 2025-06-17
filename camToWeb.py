@@ -5,6 +5,8 @@ import signal
 import sys
 import threading
 
+IPAddress = '192.168.0.101' # change to your device IP (type iwconfig to your terminal and checkout IP wlan0 or else ...)
+
 app = Flask(__name__)
 camera = None
 running = True  # Globálny prepínač cyklu
@@ -69,4 +71,4 @@ if __name__ == '__main__':
 
     init_camera()
     print("[INFO] Server beží na http://<IP_ADRESA>:5000")
-    app.run(host='192.168.0.101', port=5000, debug=False, threaded=True)
+    app.run(host=IPAddress, port=5000, debug=False, threaded=True)
