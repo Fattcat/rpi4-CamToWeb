@@ -40,7 +40,7 @@ pip install flask opencv-python numpy
 nano camToWeb.py
 ```
 - Now u need to change IP address on *line 8* to yours
-- (type *iwconfig* to your terminal to see)
+- (type *iwconfig then ifconfig* to your terminal to see)
 ```
 python3 camToWeb.py
 ```
