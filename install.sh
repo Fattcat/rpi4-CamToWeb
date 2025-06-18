@@ -1,80 +1,42 @@
 #!/bin/bash
 
-# === KONFIGURÁCIA ===
-VENV_PATH="$HOME/Desktop/CamToWeb/venv"
-TMP_PIP_DIR="$HOME/pip_tmp"
-LOG_FILE="$HOME/Desktop/CamToWeb/install_log.txt"
+echo "===== Systémové zdroje ====="
+free -h
+RAM_FREE=$(free -m | awk '/^Mem:/ { print $7 }')
+SWAP_FREE=$(free -m | awk '/^Swap:/ { print $4 }')
+echo "[INFO] Dostupná RAM: ${RAM_FREE}MB, SWAP: ${SWAP_FREE}MB"
+if [ "$RAM_FREE" -lt 300 ]; then
+    echo "[WARNING] Veľmi málo RAM (<300MB), odporúča sa pridať SWAP!"
+fi
 
-# === FUNKCIA: INFO HEADER ===
-function header {
-  echo -e "\n===== $1 ====="
-  echo -e "\n===== $1 =====" >> "$LOG_FILE"
+echo
+echo "===== Voľné miesto ====="
+df -h /
+
+echo
+echo "===== Aktivácia venv ====="
+source venv/bin/activate || { echo "[ERROR] Nepodarilo sa aktivovať venv!"; exit 1; }
+
+echo
+echo "===== Inštalácia numpy ====="
+pip install --upgrade pip setuptools wheel
+pip install numpy || { echo "[ERROR] Nepodarilo sa nainštalovať numpy."; exit 1; }
+
+echo
+echo "===== Inštalácia OpenCV (nová kompatibilná verzia) ====="
+OPENCV_VERSION="4.9.0.80"
+pip install opencv-python-headless=="$OPENCV_VERSION" || {
+    echo "[ERROR] Nepodarilo sa nainštalovať OpenCV."
+    echo "Skúsime alternatívnu verziu (4.8.1.78)..."
+    pip install opencv-python-headless==4.8.1.78 || {
+        echo "[FATAL] Zlyhala aj záložná inštalácia OpenCV!"
+        exit 1
+    }
 }
 
-# === VYMAZANIE STARÉHO LOGU ===
-rm -f "$LOG_FILE"
-
-# === KONTROLA DOSTUPNEJ RAM/SWAP ===
-header "Systémové zdroje"
-echo "[INFO] RAM a SWAP:"
-free -h | tee -a "$LOG_FILE"
-
-MEM_AVAIL=$(free -m | awk '/Mem:/ {print $7}')
-SWAP_FREE=$(free -m | awk '/Swap:/ {print $4}')
-
-if [ "$MEM_AVAIL" -lt 250 ]; then
-  echo "[WARNING] Máš málo voľnej RAM: ${MEM_AVAIL}MB" | tee -a "$LOG_FILE"
-fi
-
-if [ "$SWAP_FREE" -lt 500 ]; then
-  echo "[WARNING] Málo voľného SWAP priestoru: ${SWAP_FREE}MB" | tee -a "$LOG_FILE"
-fi
-
-# === VOĽNÉ MIESTO NA DISKU ===
-header "Voľné miesto"
-df -h | tee -a "$LOG_FILE"
-
-# === VEĽKOSŤ PIP_TMP ===
-if [ -d "$TMP_PIP_DIR" ]; then
-    du -sh "$TMP_PIP_DIR" | tee -a "$LOG_FILE"
-fi
-
-# === AKTIVÁCIA VENV ===
-header "Aktivácia venv"
-if [ -f "$VENV_PATH/bin/activate" ]; then
-  source "$VENV_PATH/bin/activate"
-  echo "[INFO] Virtuálne prostredie aktivované." | tee -a "$LOG_FILE"
-else
-  echo "[ERROR] Virtuálne prostredie neexistuje na $VENV_PATH" | tee -a "$LOG_FILE"
-  exit 1
-fi
-
-# === VYTVOR DOČASNÝ PIP TMP DIR ===
-mkdir -p "$TMP_PIP_DIR"
-
-# === INŠTALÁCIA OPENCV ===
-header "Inštalácia OpenCV"
-echo "[INFO] Inštalujem opencv-python-headless==4.4.0.42..." | tee -a "$LOG_FILE"
-
-TMPDIR="$TMP_PIP_DIR" pip install opencv-python-headless==4.4.0.42 --no-cache-dir 2>&1 | tee -a "$LOG_FILE"
-INSTALL_STATUS=$?
-
-if [ "$INSTALL_STATUS" -ne 0 ]; then
-  echo "[ERROR] Inštalácia zlyhala. Pozri log: $LOG_FILE" | tee -a "$LOG_FILE"
-  exit 2
-fi
-
-# === KONTROLA INŠTALÁCIE CV2 ===
-header "Overenie inštalácie cv2"
-python3 -c "
-try:
-    import cv2
-    print('[SUCCESS] OpenCV verzia:', cv2.__version__)
-    print('[SUCCESS] Nájdené v:', cv2.__file__)
-except Exception as e:
-    print('[ERROR] Modul cv2 nefunguje:', str(e))
-" | tee -a "$LOG_FILE"
-
-# === ODSTRÁNENIE DOČASNÉHO TMP ===
-rm -rf "$TMP_PIP_DIR"
-echo -e "\n[INFO] Hotovo. Log: $LOG_FILE"
+echo
+echo "===== Overenie inštalácie cv2 ====="
+python -c "import cv2; print('[OK] OpenCV verzia:', cv2.__version__)" || {
+    echo "[ERROR] Modul cv2 nefunguje: Nie je správne nainštalovaný."
+    exit 1
+}
