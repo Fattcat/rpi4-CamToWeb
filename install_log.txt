@@ -1,0 +1,114 @@
+
+===== Systémové zdroje =====
+              total        used        free      shared  buff/cache   available
+Mem:          485Mi       259Mi        39Mi        24Mi       185Mi       189Mi
+Swap:         1.2Gi       190Mi       1.1Gi
+[WARNING] Máš málo voľnej RAM: 189MB
+
+===== Voľné miesto =====
+Filesystem      Size  Used Avail Use% Mounted on
+udev            185M     0  185M   0% /dev
+tmpfs            49M  2.5M   47M   5% /run
+/dev/mmcblk0p1   29G  7.7G   21G  27% /
+tmpfs           243M   14M  229M   6% /dev/shm
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           243M     0  243M   0% /sys/fs/cgroup
+tmpfs           243M   19M  225M   8% /tmp
+/dev/zram1       49M   18M   28M  38% /var/log
+tmpfs            49M   11M   38M  22% /run/user/1000
+
+===== Aktivácia venv =====
+[INFO] Virtuálne prostredie aktivované.
+
+===== Inštalácia OpenCV =====
+[INFO] Inštalujem opencv-python-headless==4.4.0.42...
+Collecting opencv-python-headless==4.4.0.42
+  Downloading opencv-python-headless-4.4.0.42.tar.gz (88.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.9/88.9 MB 1.2 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × pip subprocess to install build dependencies did not run successfully.
+  │ exit code: 1
+  ╰─> [67 lines of output]
+      Ignoring numpy: markers 'python_version == "3.5"' don't match your environment
+      Ignoring numpy: markers 'python_version == "3.6"' don't match your environment
+      Ignoring numpy: markers 'python_version == "3.7"' don't match your environment
+      Collecting setuptools
+        Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+      Collecting wheel
+        Using cached wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
+      Collecting scikit-build
+        Using cached scikit_build-0.18.1-py3-none-any.whl.metadata (18 kB)
+      Collecting cmake
+        Using cached cmake-4.0.3.tar.gz (34 kB)
+        Installing build dependencies: started
+        Installing build dependencies: finished with status 'done'
+        Getting requirements to build wheel: started
+        Getting requirements to build wheel: finished with status 'done'
+        Preparing metadata (pyproject.toml): started
+        Preparing metadata (pyproject.toml): finished with status 'done'
+      Collecting pip
+        Using cached pip-25.1.1-py3-none-any.whl.metadata (3.6 kB)
+      Collecting numpy==1.17.3
+        Using cached numpy-1.17.3.zip (6.4 MB)
+        Installing build dependencies: started
+        Installing build dependencies: finished with status 'done'
+        Getting requirements to build wheel: started
+        Getting requirements to build wheel: finished with status 'done'
+        Preparing metadata (pyproject.toml): started
+        Preparing metadata (pyproject.toml): finished with status 'error'
+        error: subprocess-exited-with-error
+      
+        × Preparing metadata (pyproject.toml) did not run successfully.
+        │ exit code: 1
+        ╰─> [25 lines of output]
+            Running from numpy source directory.
+            <string>:418: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
+            Traceback (most recent call last):
+              File "/home/fattcat/Desktop/rpi4-CamToWeb/venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+                main()
+              File "/home/fattcat/Desktop/rpi4-CamToWeb/venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+                json_out["return_val"] = hook(**hook_input["kwargs"])
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/home/fattcat/Desktop/rpi4-CamToWeb/venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 175, in prepare_metadata_for_build_wheel
+                return hook(metadata_directory, config_settings)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              File "/home/fattcat/pip_tmp/pip-build-env-jdr01b0x/overlay/lib/python3.12/site-packages/setuptools/build_meta.py", line 374, in prepare_metadata_for_build_wheel
+                self.run_setup()
+              File "/home/fattcat/pip_tmp/pip-build-env-jdr01b0x/overlay/lib/python3.12/site-packages/setuptools/build_meta.py", line 512, in run_setup
+                super().run_setup(setup_script=setup_script)
+              File "/home/fattcat/pip_tmp/pip-build-env-jdr01b0x/overlay/lib/python3.12/site-packages/setuptools/build_meta.py", line 317, in run_setup
+                exec(code, locals())
+              File "<string>", line 443, in <module>
+              File "<string>", line 422, in setup_package
+              File "/home/fattcat/pip_tmp/pip-install-7fzz2adu/numpy_f01ffb9466144d5dbbdd6869ec10bae4/numpy/distutils/__init__.py", line 6, in <module>
+                from . import ccompiler
+              File "/home/fattcat/pip_tmp/pip-install-7fzz2adu/numpy_f01ffb9466144d5dbbdd6869ec10bae4/numpy/distutils/ccompiler.py", line 111, in <module>
+                replace_method(CCompiler, 'find_executables', CCompiler_find_executables)
+                               ^^^^^^^^^
+            NameError: name 'CCompiler' is not defined. Did you mean: 'ccompiler'?
+            [end of output]
+      
+        note: This error originates from a subprocess, and is likely not a problem with pip.
+      error: metadata-generation-failed
+      
+      × Encountered error while generating package metadata.
+      ╰─> See above for output.
+      
+      note: This is an issue with the package mentioned above, not pip.
+      hint: See above for details.
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+× pip subprocess to install build dependencies did not run successfully.
+│ exit code: 1
+╰─> See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+
+===== Overenie inštalácie cv2 =====
+[ERROR] Modul cv2 nefunguje: No module named 'cv2'
