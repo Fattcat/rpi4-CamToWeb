@@ -7,6 +7,26 @@ RaspberryPi4 kali linux python3 code for video streaming to flask server website
 - └── templates/
 -   ------└── index.html    ← HTML for stream video
 
+## Works with
+### on raspberry start with
+- High power device
+```
+python3 camera_stream.py
+```
+
+## Banan Pi M2 Zero
+- python3.7 and with higher (sometimes need venv and RAM to compile and install)
+- TESTED and used with banana Pi M2 Zero with ArmbianOS(30€ device)
+```
+python3.7 camera_stream.py
+```
+
+## available is FaceRecognition.py (tested ONLY on Banana Pi M2 Zero not Rpi4)!
+- need to use haarcascade_frontalface_default.xml !
+```
+python3.7 FaceRecognision.py
+```
+
 # How to use ?
 - Clone this repo (on rpi4 with linuxOS)
 ```
