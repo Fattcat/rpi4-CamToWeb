@@ -14,7 +14,7 @@ running = True  # Globálny prepínač cyklu
 # Nastavenie kamery
 def init_camera():
     global camera
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
 
     # Zníž rozlíšenie ak seká (napr. 640x480 alebo 320x240)
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
